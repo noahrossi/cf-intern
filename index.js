@@ -16,16 +16,15 @@ async function handleRequest(request) {
   // clean up JSON into our array
   variants = variants.variants
 
-  let page
-
   // distribute requests 50/50
+  let pageReq
   if (Math.random() > 0.5) {
-    let pageReq = await fetch(variants[0], {})
-    page = await pageReq.text()
+    pageReq = await fetch(variants[0], {})
   } else {
-    let pageReq = await fetch(variants[1], {})
-    page = await pageReq.text()
+    pageReq = await fetch(variants[1], {})
   }
+
+  let page = await pageReq.text()
 
   return new Response(page, {
     headers: { 'content-type': 'text/HTML' },
